@@ -1,0 +1,3 @@
+[submodule "irisdemo-base-mavenc"]
+	path = irisdemo-base-mavenc
+	url = https://github.com/intersystems-community/irisdemo-base-mavenc.git
