@@ -8,13 +8,12 @@ import java.util.Properties;
  */
 public class App 
 {
-    protected   static  String              tblName = "TestTable";
     protected   static  String              namespace = "USER";
-    protected   static  String              host = "localhost";
+    protected   static  String              host = "irishost";
     protected   static  int                 port = 1972; 
     protected   static  String              url = "jdbc:IRIS://"+host+":" + port + "/"+namespace;
     protected   static  String              username = "SuperUser";
-    protected   static  String              password = "sys";
+    protected   static  String              password = "SYS";
     
 
     public static void main( String[] args )
@@ -22,7 +21,7 @@ public class App
         Connection dbconnection = null;
         PreparedStatement pstmt = null;
 
-        System.out.println( "Hello World!!!!!" );
+        System.out.println( "Connecting to IRIS server on "+host );
 
         try {
             Class.forName ("com.intersystems.jdbc.IRISDriver");
@@ -34,8 +33,11 @@ public class App
             dbconnection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             dbconnection.setAutoCommit(true);
 
-    		pstmt = dbconnection.prepareStatement("SELECT 1)");
- 			pstmt.execute();
+    		pstmt = dbconnection.prepareStatement("SELECT 1 col1");
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                System.out.println(rs.getString("col1"));
+            }
 			pstmt.close();
 
 

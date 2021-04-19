@@ -1,12 +1,4 @@
-
-cp Dockerfile.mavenc irisdemo-base-mavenc/
-
-
-
-
-
-ここ見てmvn archetype:generateする
-https://qiita.com/opengl-8080/items/bb32732f9aa5cb3495d2
+mvn archetype:generate
 
 $ mvn archetype:generate
 Define value for property 'groupId': com.example
@@ -14,15 +6,18 @@ Define value for property 'artifactId': myapp
 Define value for property 'version' 1.0-SNAPSHOT: :
 Define value for property 'package' com.example: :
 $ mv myapp/ ../apps/image-myapp/projects/
-$ vi ../apps/image-myapp/projects/Makefile
- master->myapp
 
-iwamoto@irishost:~/git/maven-test/apps$ docker run dpmeister/demo:myapp-version-2.6.0
-no main manifest attribute, in /app/app.jar
-iwamoto@irishost:~/git/maven-test/apps$
+$ vi image-myapp/projects/myapp/pom.xml
+            <configuration>
+              <archive>
+                  <manifest>
+                      <mainClass>com.example.App</mainClass>
+                  </manifest>
+              </archive>
+            </configuration> 
 
-
-iwamoto@irishost:~/git/maven-test/apps$ docker run -ti dpmeister/demo:myapp-version-2.6.0 sh
+---------------
+$ docker run -ti dpmeister/demo:myapp-version-2.6.0 sh
 /app # ls
 app.jar  run.sh
 /app # cat run.sh
@@ -33,17 +28,5 @@ java -jar /app/app.jar/app   <= これで動くようにしないといけない
 /app #
 
 
-iwamoto@irishost:~/git/maven-test/apps$ java -jar image-myapp/projects/myapp.jar
-image-myapp/projects/master.jarにメイン・マニフェスト属性がありません
 
-iwamoto@irishost:~/git/maven-test/apps$ java -cp image-myapp/projects/myapp.jar com.example.App
-Hello World!!!
 
-iwamoto@irishost:~/git/maven-test/apps$ vi image-myapp/projects/myapp/pom.xml
-            <configuration>
-              <archive>
-                  <manifest>
-                      <mainClass>com.example.App</mainClass>
-                  </manifest>
-              </archive>
-            </configuration> 
