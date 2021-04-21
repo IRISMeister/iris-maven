@@ -1,2 +1,2 @@
 #!/bin/bash
-export WEBHOST=192.168.11.48
+export IRISHOST=192.168.11.48
